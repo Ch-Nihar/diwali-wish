@@ -43,6 +43,10 @@
             margin-top: 20px;
             color: #333;
         }
+        .share-btn {
+            background-color: #6A0DAD;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +72,7 @@
         <div id="linkContainer" class="link-container" style="display: none;">
             <p>Shareable Link:</p>
             <a href="#" id="shareLink" target="_blank"></a>
+            <button class="share-btn" onclick="shareLink()">Share</button>
         </div>
         
     </div>
@@ -95,6 +100,21 @@
             const greetingContainer = document.getElementById('greetingMessage');
             document.getElementById('userName').textContent = name;
             greetingContainer.style.display = 'block';
+        }
+        function shareLink() {
+            const link = document.getElementById('shareLink').href;
+            const message = "Check out my Diwali wish! 🎉✨ " + link;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Diwali Wishes',
+                    text: message,
+                    url: link
+                })
+                .then(() => console.log('Shared successfully!'))
+                .catch((error) => console.error('Error sharing:', error));
+            } else {
+                alert('Sharing is not supported on this browser.');
+            }
         }
 
         // Check for "name" parameter in URL
