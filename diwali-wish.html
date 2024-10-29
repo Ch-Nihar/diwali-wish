@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diwali Wishes</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #FFD700;
+            color: #6A0DAD;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .input-field {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #6A0DAD;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .link-container {
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Happy Diwali ✨</h1>
+        <!-- <p>Enter your name to receive your special Diwali wish!</p> -->
+        
+        <!-- Button to show the form -->
+        <div id="greetingMessage" style="display: none;">
+            <h2>Happy Diwali, <span id="userName"></span>! 🎉</h2>
+        </div>
+        <button onclick="showForm()">Make your Message</button>
+        
+        <!-- Form for entering name and generating link, initially hidden -->
+        <div id="formContainer" style="display: none;">
+            <div class="input-field">
+                <input type="text" id="nameInput" placeholder="Enter your name" />
+                <button onclick="generateLink()">Get My Diwali Wish!</button>
+            </div>
+        </div>
+
+        <!-- Link and greeting display areas -->
+        <div id="linkContainer" class="link-container" style="display: none;">
+            <p>Shareable Link:</p>
+            <a href="#" id="shareLink" target="_blank"></a>
+        </div>
+        
+    </div>
+
+    <script>
+        function showForm() {
+            document.getElementById('formContainer').style.display = 'block';
+        }
+
+        function generateLink() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                const link = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(name)}`;
+                document.getElementById('shareLink').href = link;
+                document.getElementById('shareLink').textContent = link;
+                document.getElementById('linkContainer').style.display = 'block';
+                updateGreeting(name);
+                document.getElementById('formContainer').style.display = 'none'; // Hide form after generating link
+            } else {
+                alert('Please enter a name!');
+            }
+        }
+
+        function updateGreeting(name) {
+            const greetingContainer = document.getElementById('greetingMessage');
+            document.getElementById('userName').textContent = name;
+            greetingContainer.style.display = 'block';
+        }
+
+        // Check for "name" parameter in URL
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            if (name) {
+                updateGreeting(decodeURIComponent(name));
+                document.getElementById('linkContainer').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
